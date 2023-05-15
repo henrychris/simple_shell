@@ -1,8 +1,11 @@
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdlib.h>
+#include "main.h"
 
+/**
+ * main - main function for the shell
+ * @argc: number of arguments
+ * @argv: array of arguments
+ * Return: 0 on success, 1 on failure
+ */
 int main(int argc, char **argv)
 {
 	char *command, path[PATH_MAX];
@@ -13,7 +16,7 @@ int main(int argc, char **argv)
 	if (command == NULL)
 	{
 		/* print error to stderror */
-		return 1;
+		return (1);
 	}
 
 	while (1)
@@ -24,11 +27,21 @@ int main(int argc, char **argv)
 			/* print error to stderror */
 			break;
 		}
-		// parse the command here.
-		// execute the command here.
+		/* parse the command here. */
+		parse_command(command);
+		/* execute the command here.*/
 		if (strcmp(command, "exit\n") == 0)
 			break;
 	}
 	free(command);
 	return (0);
+}
+
+/**
+ * parse_command - parses the command
+ * @command: command to parse
+ * Return: void
+ */
+void parse_command(char *command)
+{
 }
