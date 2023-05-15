@@ -27,11 +27,12 @@ int main(int argc, char **argv)
 			/* print error to stderror */
 			break;
 		}
+		/* TODO Trim command input*/
+		if (strcmp(command, "exit\n") == 0)
+			break;
 		/* parse the command here. */
 		parse_command(command);
 		/* execute the command here.*/
-		if (strcmp(command, "exit\n") == 0)
-			break;
 	}
 	free(command);
 	return (0);
@@ -44,4 +45,15 @@ int main(int argc, char **argv)
  */
 void parse_command(char *command)
 {
+	/**
+	 * placeholder for splitting command into components
+	*/
+	const char delimiters[] = " ,.!><|&;\"'";
+
+	char *token = strtok(command, delimiters);
+	while (token != NULL)
+	{
+		printf("Token: %s\n", token);
+		token = strtok(NULL, delimiters);
+	}
 }
