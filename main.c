@@ -8,9 +8,9 @@
  */
 int main(int argc, char **argv)
 {
-	char *command, path[PATH_MAX];
+	char *command, path[PATH_MAX], *cmd;
 
-	command = (char *)malloc(1024 * sizeof(char));
+	command = (char *)malloc(1024);
 	getcwd(path, sizeof(path));
 
 	if (command == NULL)
@@ -30,9 +30,9 @@ int main(int argc, char **argv)
 		/* TODO Trim command input*/
 		if (strcmp(command, "exit\n") == 0)
 			break;
-		/* parse the command here. */
-		parse_command(command);
-		/* execute the command here.*/
+
+		cmd = parse_command(command);
+		execute_command(cmd);
 	}
 	free(command);
 	return (0);
@@ -41,19 +41,31 @@ int main(int argc, char **argv)
 /**
  * parse_command - parses the command
  * @command: command to parse
- * Return: void
+ * Return: The command to execute
  */
-void parse_command(char *command)
+char *parse_command(char *command)
 {
-	/**
-	 * placeholder for splitting command into components
-	*/
-	const char delimiters[] = " ,.!><|&;\"'";
-
+	const char delimiters[] = " ,.!><|&;\"'\n";
 	char *token = strtok(command, delimiters);
-	while (token != NULL)
+
+	return (token);
+}
+
+void execute_command(char *command)
+{
+	int (*commandFunctions[])() = {cd, history, env, setenv, unsetenv, help};
+	const char *commandNames[] = {"cd", "history", "env", "setenv", "unsetenv", "help"};
+
+	int numCommands = sizeof(commandNames) / sizeof(commandNames[0]);
+	int i;
+
+	for (i = 0; i < numCommands; i++)
 	{
-		printf("Token: %s\n", token);
-		token = strtok(NULL, delimiters);
+		if (strcmp(command, commandNames[i]) == 0)
+		{
+			commandFunctions[i]();
+			return;
+		}
 	}
+	printf("Nothing Here.\n");
 }
