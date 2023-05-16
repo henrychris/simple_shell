@@ -32,7 +32,7 @@ int main(int argc, char **argv)
 			break;
 
 		cmd = parse_command(command);
-		execute_command(cmd);
+		execute_buitin_cmd(cmd);
 	}
 	free(command);
 	return (0);
@@ -51,7 +51,7 @@ char *parse_command(char *command)
 	return (token);
 }
 
-void execute_command(char *command)
+void execute_buitin_cmd(char *command)
 {
 	int (*commandFunctions[])() = {cd, history, env, setenv, unsetenv, help};
 	const char *commandNames[] = {"cd", "history", "env", "setenv", "unsetenv", "help"};
@@ -67,5 +67,6 @@ void execute_command(char *command)
 			return;
 		}
 	}
-	printf("Nothing Here.\n");
+	
+	execute_ext_cmd(command);
 }
