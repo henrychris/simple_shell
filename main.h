@@ -6,11 +6,18 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-void parse_command(char *command);
+char *parse_command(char *command);
 int add_command_to_history(char *command); /* use linked list*/
-void get_last_command();				   /* get last command */
-void execute_buitin_command(char *command);
+void get_last_command();		   /* get last command */
 void execute_command(char *command);
 void print_error(char *err_message);
 
+/* BUILTIN COMMANDS */
+
+int cd();
+int help();
+int env();
+int unsetenv();
+int setenv();
+int history();
 #endif
