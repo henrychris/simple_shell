@@ -34,3 +34,9 @@ int help()
 {
 	return (0);
 }
+
+void execute_ext_cmd(char *command)
+{
+	// use execve to find program and execute it.
+	// make sure to fork and run it in a new process
+}

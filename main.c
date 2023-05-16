@@ -12,7 +12,6 @@ int main(int argc, char **argv)
 
 	command = (char *)malloc(1024);
 	getcwd(path, sizeof(path));
-
 	if (command == NULL)
 	{
 		/* print error to stderror */
@@ -48,11 +47,20 @@ char *parse_command(char *command)
 	const char delimiters[] = " ,.!><|&;\"'\n";
 	char *token = strtok(command, delimiters);
 
+	/*
+	 * for now, only return the first token
+	 * In the future, store all tokens in an array or linked list.
+	 */
 	return (token);
 }
 
 void execute_buitin_cmd(char *command)
 {
+	/*
+	 * Instead of a an if-else or switch statement
+	 * Functions are stored in an array of pointers to functions
+	 * If found in arrray of commandNames, the index is used to execute the function.
+	 */
 	int (*commandFunctions[])() = {cd, history, env, setenv, unsetenv, help};
 	const char *commandNames[] = {"cd", "history", "env", "setenv", "unsetenv", "help"};
 
@@ -61,12 +69,13 @@ void execute_buitin_cmd(char *command)
 
 	for (i = 0; i < numCommands; i++)
 	{
+		// check if command exists in our array of command names
 		if (strcmp(command, commandNames[i]) == 0)
 		{
 			commandFunctions[i]();
 			return;
 		}
 	}
-	
+
 	execute_ext_cmd(command);
 }
