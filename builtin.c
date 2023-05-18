@@ -34,13 +34,3 @@ int help()
 {
 	return (0);
 }
-
-int execute_ext_cmd(char *command)
-{
-	// use execve to find program and execute it.
-	// make sure to fork and run it in a new process
-
-	// if not found, throw error
-	// ! We will
-	return (-1);
-}
