@@ -26,16 +26,16 @@ char **parse_command(char *command)
 }
 
 /**
-  * exec_command - execute a command. First checks for builtins, then
-  * ext programs
-  * @command: an array of a strings representing parts of a command
-  * Return: an int representing success or failure.
-  */
+ * exec_command - execute a command. First checks for builtins, then
+ * ext programs
+ * @command: an array of a strings representing parts of a command
+ * Return: an int representing success or failure.
+ */
 int exec_command(char **command)
 {
-	int (*commandFunctions[])() = {cd, history, env, setenv, unsetenv, help};
+	int (*commandFunctions[])() = {cd, history, env, help};
 	const char *commandNames[] = {"cd", "history", "env",
-		"setenv", "unsetenv", "help"};
+				      "help"};
 
 	int numCommands = sizeof(commandNames) / sizeof(commandNames[0]);
 	int i = 0;
@@ -54,12 +54,12 @@ int exec_command(char **command)
 	return (execute_ext_cmd(base_command, command));
 }
 /**
-  * execute_ext_cmd - execute external programs
-  * @base_command: the program being called, the first arg
-  * in args
-  * @args: an array of strings, tokenised from the original command
-  * Return: an int value representing success or failure
-  */
+ * execute_ext_cmd - execute external programs
+ * @base_command: the program being called, the first arg
+ * in args
+ * @args: an array of strings, tokenised from the original command
+ * Return: an int value representing success or failure
+ */
 int execute_ext_cmd(char *base_command, char **args)
 {
 	pid_t pid;
