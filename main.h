@@ -12,6 +12,7 @@ void get_last_command();		   /* get last command */
 void execute_buitin_cmd(char *command);
 void execute_ext_cmd(char *command);
 void print_error(char *err_message);
+void printError(char *argVector, int count, char *command);
 
 /* BUILTIN COMMANDS */
 
