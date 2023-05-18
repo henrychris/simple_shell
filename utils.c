@@ -32,7 +32,7 @@ int exec_command(char **command)
 
 	int numCommands = sizeof(commandNames) / sizeof(commandNames[0]);
 	int i;
-	char* base_command = command[i];
+	char *base_command = command[i];
 
 	for (i = 0; i < numCommands; i++)
 	{
@@ -44,17 +44,30 @@ int exec_command(char **command)
 	}
 
 	/* if not found, try to get ext function */
-	return (execute_ext_cmd(command[i], command));
+	return (execute_ext_cmd(base_command, command));
 }
 
-int execute_ext_cmd(char *command, char **args)
+int execute_ext_cmd(char *base_command, char **args)
 {
 	// use execve to find program and execute it.
 	// make sure to fork and run it in a new process
 
 	// if not found, throw error
 	// ! We will decide on error codes.
-	return (-1);
+	pid_t pid;
+	int status;
+
+	// pid = fork();
+	if (pid == -1)
+		return (-2); /* processing error */
+	if (pid == 0)
+	{
+		// execve
+	}
+	waitpid(pid, &status, 0);
+	// status tells us how the process terminated
+	// how do we know if it wasn't found?
+	return (status);
 }
 
 /**

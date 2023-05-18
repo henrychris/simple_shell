@@ -3,6 +3,8 @@
 #define DELIMS " ,.!><|&;\"'\n\t\r"
 #define MAX_ARGC 10
 
+#include <sys/types.h>
+#include <sys/wait.h>
 #include "main.h"
 
 char **parse_command(char *command);
