@@ -9,33 +9,31 @@
 int main(int argc, char **argv)
 {
 	char *command = NULL, *path = NULL, *cmd;
-	int i = 0, count = 1;
+	int i = 0, count = 1, ret = 0;
 	size_t n = 0;
 
-	/* It's the same as getline, when path is null and size = 0
-	   getcwd allocates it */
-	getcwd(path, 0);
+	path = malloc(PATH_MAX);
+	if (path == NULL)
+		return (-1);
+
+	if (getcwd(path, PATH_MAX) == NULL)
+		return (-1);
+
 	while (1)
 	{
 		printf("$ ");
-		/* fgets is forbidden but getline is allowed */
-		/* In getline the function will allocate command by itself 
-		 because command is NULL and n = 0, Read man getline*/
 		i = getline(&command, &n, stdin);
-		/* TODO Trim command input*/
 		if (strcmp(command, "exit\n") == 0 || i == EOF)
 		{
 			if (i == -1)
 				write(1, "\n", 1);
 			break;
 		}
-		/* At time when we add commands if command variable
-		   doesn't equal to any one of theim then printError */
-		else
-			printError(argv[0], count, command);
 
 		cmd = parse_command(command);
-		execute_buitin_cmd(cmd);
+		ret = execute_buitin_cmd(cmd);
+		if (ret == -1)
+			print_notfound_error(argv[0], count, command);
 		count++;
 	}
 	free(path);
@@ -44,12 +42,12 @@ int main(int argc, char **argv)
 }
 
 /**
-  * printError - print error message
-  * @argVector: argv
-  * @count: count it
-  * @command: command
-  */
-void printError(char *argVector, int count, char *command)
+ * print_notfound_error - print error message
+ * @argVector: argv
+ * @count: count it
+ * @command: command
+ */
+void print_notfound_error(char *argVector, int count, char *command)
 {
 	char *string = malloc(sizeof(char) * (strlen(command)));
 	int i = 0;
@@ -60,7 +58,7 @@ void printError(char *argVector, int count, char *command)
 	write(STDERR_FILENO, ": ", 2);
 	while (numberString[i] != '\0')
 		i++;
-	write(STDERR_FILENO, numberString , i);
+	write(STDERR_FILENO, numberString, i);
 	i = 0;
 	write(STDERR_FILENO, ": ", 2);
 	while (command[i] != '\n' && command[i] != '\0')
@@ -89,7 +87,7 @@ char *parse_command(char *command)
 	return (token);
 }
 
-void execute_buitin_cmd(char *command)
+int execute_buitin_cmd(char *command)
 {
 	/*
 	 * Instead of a an if-else or switch statement
@@ -107,10 +105,10 @@ void execute_buitin_cmd(char *command)
 		// check if command exists in our array of command names
 		if (strcmp(command, commandNames[i]) == 0)
 		{
-			commandFunctions[i]();
-			return;
+			return (commandFunctions[i]());
 		}
+		// if not found, try to get ext function
 	}
-
-	execute_ext_cmd(command);
+	/* Returns a value so we can return an error */
+	return (execute_ext_cmd(command));
 }

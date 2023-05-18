@@ -9,11 +9,11 @@
 char *parse_command(char *command);
 int add_command_to_history(char *command); /* use linked list*/
 void get_last_command();		   /* get last command */
-void execute_buitin_cmd(char *command);
-void execute_ext_cmd(char *command);
+int execute_buitin_cmd(char *command);
+int execute_ext_cmd(char *command);
 void print_error(char *err_message);
-void printError(char *argVector, int count, char *command);
-
+void print_notfound_error(char *argVector, int count, char *command);
+int getline(char **lineptr, size_t *n, FILE *stream);
 /* BUILTIN COMMANDS */
 
 int cd();
