@@ -8,33 +8,68 @@
  */
 int main(int argc, char **argv)
 {
-	char *command, path[PATH_MAX], *cmd;
+	char *command = NULL, *path = NULL, *cmd;
+	int i = 0, count = 1;
+	size_t n = 0;
 
-	command = (char *)malloc(1024);
-	getcwd(path, sizeof(path));
-	if (command == NULL)
-	{
-		/* print error to stderror */
-		return (1);
-	}
-
+	/* It's the same as getline, when path is null and size = 0
+	   getcwd allocates it */
+	getcwd(path, 0);
 	while (1)
 	{
-		printf("$ %s ", path);
-		if (fgets(command, 1024, stdin) == NULL)
+		printf("$ ");
+		/* fgets is forbidden but getline is allowed */
+		/* In getline the function will allocate command by itself 
+		 because command is NULL and n = 0, Read man getline*/
+		i = getline(&command, &n, stdin);
+		/* TODO Trim command input*/
+		if (strcmp(command, "exit\n") == 0 || i == EOF)
 		{
-			/* print error to stderror */
+			if (i == -1)
+				write(1, "\n", 1);
 			break;
 		}
-		/* TODO Trim command input*/
-		if (strcmp(command, "exit\n") == 0)
-			break;
+		/* At time when we add commands if command variable
+		   doesn't equal to any one of theim then printError */
+		else
+			printError(argv[0], count, command);
 
 		cmd = parse_command(command);
 		execute_buitin_cmd(cmd);
+		count++;
 	}
+	free(path);
 	free(command);
 	return (0);
+}
+
+/**
+  * printError - print error message
+  * @argVector: argv
+  * @count: count it
+  * @command: command
+  */
+void printError(char *argVector, int count, char *command)
+{
+	char *string = malloc(sizeof(char) * (strlen(command)));
+	int i = 0;
+	char numberString[10];
+
+	sprintf(numberString, "%d", count);
+	write(STDERR_FILENO, argVector, strlen(argVector));
+	write(STDERR_FILENO, ": ", 2);
+	while (numberString[i] != '\0')
+		i++;
+	write(STDERR_FILENO, numberString , i);
+	i = 0;
+	write(STDERR_FILENO, ": ", 2);
+	while (command[i] != '\n' && command[i] != '\0')
+	{
+		string[i] = command[i];
+		i++;
+	}
+	write(STDERR_FILENO, string, i);
+	write(STDERR_FILENO, ": not found\n", 12);
 }
 
 /**
