@@ -13,6 +13,7 @@ int main(int argc, char **argv)
 	size_t n = 0;
 
 	path = malloc(PATH_MAX);
+	argc += 0;
 	if (path == NULL)
 		return (-1);
 
@@ -40,3 +41,4 @@ int main(int argc, char **argv)
 	free(command);
 	return (0);
 }
+

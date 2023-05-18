@@ -13,30 +13,37 @@ char **parse_command(char *command)
 
 	while (token != NULL && i < MAX_ARGC)
 	{
-		// Allocate memory for the token and copy its value
+		/* Allocate memory for the token and copy its value */
 		commands[i] = malloc(strlen(token) + 1);
 		strcpy(commands[i], token);
 
 		i++;
 		token = strtok(NULL, DELIMS);
 	}
-	/* Null-terminate the commands array*/
+	/* Null-terminate the commands array */
 	commands[i] = NULL;
 	return (commands);
 }
 
+/**
+  * exec_command - execute a command. First checks for builtins, then
+  * ext programs
+  * @command: an array of a strings representing parts of a command
+  * Return: an int representing success or failure.
+  */
 int exec_command(char **command)
 {
 	int (*commandFunctions[])() = {cd, history, env, setenv, unsetenv, help};
-	const char *commandNames[] = {"cd", "history", "env", "setenv", "unsetenv", "help"};
+	const char *commandNames[] = {"cd", "history", "env",
+		"setenv", "unsetenv", "help"};
 
 	int numCommands = sizeof(commandNames) / sizeof(commandNames[0]);
-	int i;
+	int i = 0;
 	char *base_command = command[i];
 
 	for (i = 0; i < numCommands; i++)
 	{
-		// check if command exists in our array of command names
+		/* check if command exists in our array of command names */
 		if (strcmp(base_command, commandNames[i]) == 0)
 		{
 			return (commandFunctions[i]());
@@ -46,35 +53,36 @@ int exec_command(char **command)
 	/* if not found, try to get ext function */
 	return (execute_ext_cmd(base_command, command));
 }
-
+/**
+  * execute_ext_cmd - execute external programs
+  * @base_command: the program being called, the first arg
+  * in args
+  * @args: an array of strings, tokenised from the original command
+  * Return: an int value representing success or failure
+  */
 int execute_ext_cmd(char *base_command, char **args)
 {
-	// use execve to find program and execute it.
-	// make sure to fork and run it in a new process
-
-	// if not found, throw error
-	// ! We will decide on error codes.
 	pid_t pid;
 	int status;
+	char *envp[] = {NULL};
 
-	// pid = fork();
+	pid = fork();
 	if (pid == -1)
 		return (-2); /* processing error */
 	if (pid == 0)
 	{
-		// execve
+		execve(base_command, args, envp);
 	}
 	waitpid(pid, &status, 0);
-	// status tells us how the process terminated
-	// how do we know if it wasn't found?
 	return (status);
 }
 
 /**
- * print_notfound_error - print error message
+ * print_error - print error message
  * @argVector: argv
  * @count: count it
  * @command: command
+ * Return: nothing
  */
 void print_error(char *argVector, int count, char *command)
 {

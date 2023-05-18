@@ -4,33 +4,35 @@
  * cd - changes the current working directory
  * Return: 0 on success, 1 on failure
  */
-int cd()
+int cd(void)
 {
 	printf("Changed Directories.\n");
 	return (0);
 }
 
-int history()
+/**
+  * history - show history
+  * Return: 0, or 1
+  */
+int history(void)
 {
 	return (0);
 }
 
-int env()
+/**
+  * env - get the environment
+  * Return: 0 or 1
+  */
+int env(void)
 {
 	return (0);
 }
 
-int setenv()
-{
-	return (0);
-}
-
-int unsetenv()
-{
-	return (0);
-}
-
-int help()
+/**
+  * help - show help
+  * Return: 0 or 1
+  */
+int help(void)
 {
 	return (0);
 }
