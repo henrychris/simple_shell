@@ -8,17 +8,11 @@
  */
 int main(int argc, char **argv)
 {
-	char *command = NULL, *path = NULL, **cmds;
+	char *command = NULL, **cmds;
 	int i = 0, count = 1, ret = 0;
 	size_t n = 0;
 
-	path = malloc(PATH_MAX);
 	argc += 0;
-	if (path == NULL)
-		return (-1);
-	/* TODO need to print the cwd when prompting the user*/
-	if (getcwd(path, PATH_MAX) == NULL)
-		return (-1);
 
 	while (1)
 	{
@@ -38,7 +32,6 @@ int main(int argc, char **argv)
 			print_error(argv[0], count, command);
 		count++;
 	}
-	free(path);
 	free(command);
 	return (0);
 }
