@@ -36,12 +36,12 @@ int exec_command(char **command)
 	int (*commandFunctions[])() = {cd, history, env, help};
 	const char *commandNames[] = {"cd", "history", "env",
 				      "help"};
-	char *dirName = NULL;
 
 	int numCommands = sizeof(commandNames) / sizeof(commandNames[0]);
 	int i = 0;
 	/* the main command is the first item in the array */
 	char *base_command = command[i];
+	i++;
 
 	for (i = 0; i < numCommands; i++)
 	{
@@ -49,12 +49,7 @@ int exec_command(char **command)
 		if (strcmp(base_command, commandNames[i]) == 0)
 		{
 			if (i == 0)
-			{
-				if (getcwd(dirName, 0))
-					getDirf(dirName);
-				else
-					perror("Fail");
-			}
+				getDir(command[i]);
 			return (commandFunctions[i]());
 		}
 	}

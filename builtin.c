@@ -7,10 +7,12 @@ extern char **environ;
  */
 int cd(void)
 {
+
 	/* To take arguments from util.c file I'll add new function that
 	   takes them and return it to cd */
 	/* Argument that I want is name of the directory that I want to change
 	   to it */
+	
 	printf("Changed Directories.\n");
 	return (0);
 }
