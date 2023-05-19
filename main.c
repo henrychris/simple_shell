@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 	argc += 0;
 	if (path == NULL)
 		return (-1);
-
+	/* TODO need to print the cwd when prompting the user*/
 	if (getcwd(path, PATH_MAX) == NULL)
 		return (-1);
 
@@ -33,6 +33,7 @@ int main(int argc, char **argv)
 
 		cmds = parse_command(command);
 		ret = exec_command(cmds);
+		/* -1 = command not found */
 		if (ret == -1)
 			print_error(argv[0], count, command);
 		count++;
