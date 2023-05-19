@@ -36,6 +36,7 @@ int exec_command(char **command)
 	int (*commandFunctions[])() = {cd, history, env, help};
 	const char *commandNames[] = {"cd", "history", "env",
 				      "help"};
+	char *dirName = NULL;
 
 	int numCommands = sizeof(commandNames) / sizeof(commandNames[0]);
 	int i = 0;
@@ -47,6 +48,13 @@ int exec_command(char **command)
 		/* check if command exists in our array of command names */
 		if (strcmp(base_command, commandNames[i]) == 0)
 		{
+			if (i == 0)
+			{
+				if (getcwd(dirName, 0))
+					getDirf(dirName);
+				else
+					perror("Fail");
+			}
 			return (commandFunctions[i]());
 		}
 	}
@@ -111,4 +119,9 @@ void print_error(char *argVector, int count, char *command)
 	}
 	write(STDERR_FILENO, string, i);
 	write(STDERR_FILENO, ": not found\n", 12);
+}
+
+char *getDir(char *buff)
+{
+	return (buff);
 }
