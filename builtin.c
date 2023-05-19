@@ -7,13 +7,26 @@ extern char **environ;
  */
 int cd(void)
 {
+	char *dirName = getDir();
 
-	/* To take arguments from util.c file I'll add new function that
-	   takes them and return it to cd */
-	/* Argument that I want is name of the directory that I want to change
-	   to it */
-	
-	printf("Changed Directories.\n");
+	if (dirName == NULL)
+	{
+		dirName = getenv("HOME");
+		if (!dirName)
+			perror("Fail");
+	} else if (strcmp(dirName, "-") == 0)
+	{
+		dirName = getenv("OLDPWD");
+		if (!dirName)
+			perror("Fail");
+	}
+	if (chdir(dirName) != 0)
+		perror("Fail");
+	else
+	{
+		if (setenv("PWD", dirName, 1) != 0)
+			perror("Fail");
+	}
 	return (0);
 }
 
