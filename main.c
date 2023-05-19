@@ -6,13 +6,11 @@
  * @argv: array of arguments
  * Return: 0 on success, 1 on failure
  */
-int main(int argc, char **argv)
+int main(__attribute__((unused))int argc, __attribute__((unused))char **argv)
 {
 	char *command = NULL, **cmds;
 	int i = 0, count = 1, ret = 0;
 	size_t n = 0;
-
-	argc += 0;
 
 	while (1)
 	{
