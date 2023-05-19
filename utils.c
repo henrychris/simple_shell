@@ -1,5 +1,7 @@
 #include "utils.h"
 
+char buff[1024];
+
 /**
  * parse_command - parses the command and tokenises it
  * @command: command to parse
@@ -41,7 +43,6 @@ int exec_command(char **command)
 	int i = 0;
 	/* the main command is the first item in the array */
 	char *base_command = command[i];
-	i++;
 
 	for (i = 0; i < numCommands; i++)
 	{
@@ -49,7 +50,10 @@ int exec_command(char **command)
 		if (strcmp(base_command, commandNames[i]) == 0)
 		{
 			if (i == 0)
-				getDir(command[i]);
+			{
+				if (command[1])
+					strcpy(buff, command[1]);
+			}
 			return (commandFunctions[i]());
 		}
 	}
@@ -116,7 +120,7 @@ void print_error(char *argVector, int count, char *command)
 	write(STDERR_FILENO, ": not found\n", 12);
 }
 
-char *getDir(char *buff)
+char *getDir(void)
 {
 	return (buff);
 }
