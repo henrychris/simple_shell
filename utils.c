@@ -112,4 +112,6 @@ void print_error(char *argVector, int count, char *command)
 	}
 	write(STDERR_FILENO, string, i);
 	write(STDERR_FILENO, ": not found\n", 12);
+
+	free(string);
 }

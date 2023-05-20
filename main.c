@@ -31,6 +31,7 @@ int main(__attribute__((unused))int argc, char **argv)
 		count++;
 	}
 	free(command);
+	free(cmds);
 	return (0);
 }
 
