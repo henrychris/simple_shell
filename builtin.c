@@ -80,7 +80,7 @@ int pwd(void)
 		return (-2);
 	}
 
-	write(1, buff, sizeof(buff));
+	write(1, buff, strlen(buff));
 	write(1, "\n", 1);
 
 	free(buff);
