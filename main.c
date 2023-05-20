@@ -6,7 +6,7 @@
  * @argv: array of arguments
  * Return: 0 on success, 1 on failure
  */
-int main(__attribute__((unused))int argc, __attribute__((unused))char **argv)
+int main(__attribute__((unused))int argc, char **argv)
 {
 	char *command = NULL, **cmds;
 	int i = 0, count = 1, ret = 0;

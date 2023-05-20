@@ -33,9 +33,10 @@ char **parse_command(char *command)
  */
 int exec_command(char **command)
 {
-	int (*commandFunctions[])(char **) = {cd, history, env, help};
+	printf("%s\n", command[0]);
+	int (*commandFunctions[])(char **) = {cd, history, env, help, pwd};
 	const char *commandNames[] = {"cd", "history", "env",
-				      "help"};
+				      "help", "pwd"};
 
 	int numCommands = sizeof(commandNames) / sizeof(commandNames[0]);
 	int i = 0;

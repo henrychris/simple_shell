@@ -1,4 +1,5 @@
 #include "main.h"
+#include "utils.h"
 
 extern char **environ;
 /**
@@ -63,5 +64,25 @@ int env(void)
  */
 int help(void)
 {
+	return (0);
+}
+
+/**
+ * pwd - print the current directory
+ * Return: 0 or 1
+ */
+int pwd(void)
+{
+	char *buff = malloc(sizeof(char) * PATH_MAX);
+	if (getcwd(buff, PATH_MAX) == NULL)
+	{
+		perror("Error with getcwd() in pwd(void)");
+		return (-2);
+	}
+
+	write(1, buff, sizeof(buff));
+	write(1, "\n", 1);
+
+	free(buff);
 	return (0);
 }
