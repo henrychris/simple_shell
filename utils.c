@@ -1,7 +1,5 @@
 #include "utils.h"
 
-char buff[1024];
-
 /**
  * parse_command - parses the command and tokenises it
  * @command: command to parse
@@ -35,7 +33,7 @@ char **parse_command(char *command)
  */
 int exec_command(char **command)
 {
-	int (*commandFunctions[])() = {cd, history, env, help};
+	int (*commandFunctions[])(char **) = {cd, history, env, help};
 	const char *commandNames[] = {"cd", "history", "env",
 				      "help"};
 
@@ -49,12 +47,8 @@ int exec_command(char **command)
 		/* check if command exists in our array of command names */
 		if (strcmp(base_command, commandNames[i]) == 0)
 		{
-			if (i == 0)
-			{
-				if (command[1])
-					strcpy(buff, command[1]);
-			}
-			return (commandFunctions[i]());
+			/* The param is passed to the function that requires it */
+			return (commandFunctions[i](command));
 		}
 	}
 
@@ -118,9 +112,4 @@ void print_error(char *argVector, int count, char *command)
 	}
 	write(STDERR_FILENO, string, i);
 	write(STDERR_FILENO, ": not found\n", 12);
-}
-
-char *getDir(void)
-{
-	return (buff);
 }

@@ -5,16 +5,17 @@ extern char **environ;
  * cd - changes the current working directory
  * Return: 0 on success, 1 on failure
  */
-int cd(void)
+int cd(char **args)
 {
-	char *dirName = getDir();
+	char *dirName = args[1];
 
 	if (dirName == NULL)
 	{
 		dirName = getenv("HOME");
 		if (!dirName)
 			perror("Fail");
-	} else if (strcmp(dirName, "-") == 0)
+	}
+	else if (strcmp(dirName, "-") == 0)
 	{
 		dirName = getenv("OLDPWD");
 		if (!dirName)
@@ -31,18 +32,18 @@ int cd(void)
 }
 
 /**
-  * history - show history
-  * Return: 0, or 1
-  */
+ * history - show history
+ * Return: 0, or 1
+ */
 int history(void)
 {
 	return (0);
 }
 
 /**
-  * env - get the environment
-  * Return: 0 or 1
-  */
+ * env - get the environment
+ * Return: 0 or 1
+ */
 int env(void)
 {
 	char **env = environ;
@@ -57,9 +58,9 @@ int env(void)
 }
 
 /**
-  * help - show help
-  * Return: 0 or 1
-  */
+ * help - show help
+ * Return: 0 or 1
+ */
 int help(void)
 {
 	return (0);
