@@ -33,11 +33,32 @@ int cd(char **args)
 }
 
 /**
- * history - show history
- * Return: 0, or 1
+ * _getline - out getline function
+ * @lineptr: lineptr
+ * @n: size of line
+ * @stream: stream
+ * Return: ssize_t
  */
-int history(void)
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
+	size_t count = 1024;
+	ssize_t size;
+
+	if (*n == 0 && stream)
+	{
+		*lineptr = malloc(count * sizeof(char *));
+		if (!(*lineptr))
+		{
+			perror("File");
+			return (1);
+		}
+		size = read(0, *lineptr, count);
+		if (size == -1)
+		{
+			perror("File");
+			return (1);
+		}
+	}
 	return (0);
 }
 
@@ -62,7 +83,7 @@ int env(void)
  * help - show help
  * Return: 0 or 1
  */
-int help(void)
+int history(void)
 {
 	return (0);
 }
