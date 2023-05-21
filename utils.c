@@ -11,6 +11,8 @@ char **parse_command(char *command)
 	char *token = strtok(command, DELIMS);
 	char **commands = malloc(MAX_ARGC * sizeof(char *));
 
+	if (command == NULL)
+		return (NULL);
 	while (token != NULL && i < MAX_ARGC)
 	{
 		/* Allocate memory for the token and copy its value */
@@ -33,9 +35,8 @@ char **parse_command(char *command)
  */
 int exec_command(char **command)
 {
-	int (*commandFunctions[])(char **) = {cd, history, env, help, pwd};
-	const char *commandNames[] = {"cd", "history", "env",
-				      "help", "pwd"};
+	int (*commandFunctions[])(char **) = {cd, history, env, pwd};
+	const char *commandNames[] = {"cd", "history", "env", "pwd"};
 
 	int numCommands = sizeof(commandNames) / sizeof(commandNames[0]);
 	int i = 0;
