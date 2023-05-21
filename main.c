@@ -14,8 +14,8 @@ int main(__attribute__((unused))int argc, char **argv)
 
 	while (1)
 	{
-		printf("$ ");
-		i = getline(&command, &n, stdin);
+		write(1, "$ ", 2);
+		i = _getline(&command, &n, stdin);
 		if (strcmp(command, "exit\n") == 0 || i == EOF)
 		{
 			if (i == -1)
@@ -34,4 +34,3 @@ int main(__attribute__((unused))int argc, char **argv)
 	free(cmds);
 	return (0);
 }
-
