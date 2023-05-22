@@ -2,14 +2,16 @@
 #include <string.h>
 #include <stdlib.h>
 
-char *_strlite(char *str, const char *delim)
+char *_strlite(char *string, const char *delim)
 {
 	int j = 0, i = 0, stop = 0;
+	char *str = malloc((strlen(string) + 1) * sizeof(char));
 
-	while (str[j])
+	strcpy(str, string);
+	if (str == NULL)
+		return (NULL);
+	while (str[j] != '\0')
 	{
-		if (str[j] == '\0')
-			break;
 		for (i = 0; i < strlen(delim); i++)
 		{
 			if (str[j] == delim[i])
@@ -29,22 +31,24 @@ char *_strtok(char *str, const char *delim)
 {
 	int i = 0;
 	static char *p = NULL;
+	char *ptr;
 
 	if (str == NULL)
 	{
 		if (p == NULL || p[i] == '\0')
 			return (NULL);
-		while (p[i])
+		while (1)
 		{
 			if (p[i] == '\0')
 			{
-				str = &p[i + 1];
+				ptr = &p[i + 1];
 				break;
 			}
 			i++;
 		}
 	} else
 	{
+		ptr = str;
 		if (p != NULL)
 			free(p);
 		p = malloc(1024 * sizeof(char));
@@ -54,12 +58,12 @@ char *_strtok(char *str, const char *delim)
 			return (NULL);
 		}
 	}
-	p = _strlite(str, delim);
+	p = _strlite(ptr, delim);
 	return (p);
 }
 int main(void)
 {
-	char s[] = "H,w";
+	char s[] = "Hello,my,name,is,Adam";
 	char *ptr;
 
 	ptr = _strtok(s, ",");
