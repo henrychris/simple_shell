@@ -32,16 +32,13 @@ char *_strtok(char *str, const char *delim)
 
 	if (str == NULL)
 	{
-		if (p == NULL)
+		if (p == NULL || p[i] == '\0')
 			return (NULL);
 		while (p[i])
 		{
 			if (p[i] == '\0')
 			{
-				if ((p + i + 1) == NULL)
-					str = NULL;
-				else
-					str = (p + i + 1);
+				str = &p[i + 1];
 				break;
 			}
 			i++;
@@ -69,7 +66,7 @@ int main(void)
 	while (ptr)
 	{
 		printf("%s\n", ptr);
-		ptr = _strtok(NULL, " ");
+		ptr = _strtok(NULL, ",");
 	}
 	return (0);
 }
