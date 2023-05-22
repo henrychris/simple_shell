@@ -63,14 +63,16 @@ char *_strtok(char *str, const char *delim)
 }
 int main(void)
 {
-	char s[] = "Hello,my,name,is,Adam";
+	char *s = NULL;
+	size_t n = 0;
 	char *ptr;
 
-	ptr = _strtok(s, ",");
+	getline(&s, &n, stdin);
+	ptr = _strtok(s, " ");
 	while (ptr)
 	{
 		printf("%s\n", ptr);
-		ptr = _strtok(NULL, ",");
+		ptr = _strtok(NULL, " ");
 	}
 	return (0);
 }
