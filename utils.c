@@ -33,7 +33,6 @@ char **parse_command(char *command)
  */
 int exec_command(char **command)
 {
-	printf("%s\n", command[0]);
 	int (*commandFunctions[])(char **) = {cd, history, env, help, pwd};
 	const char *commandNames[] = {"cd", "history", "env",
 				      "help", "pwd"};
@@ -113,4 +112,6 @@ void print_error(char *argVector, int count, char *command)
 	}
 	write(STDERR_FILENO, string, i);
 	write(STDERR_FILENO, ": not found\n", 12);
+
+	free(string);
 }
