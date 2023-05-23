@@ -5,21 +5,21 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <stddef.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
-char *parse_command(char *command);
+#include "utils.h"
+
+#define PATH_MAX 260
+
 int add_command_to_history(char *command); /* use linked list*/
 void get_last_command();		   /* get last command */
-void execute_buitin_cmd(char *command);
-void execute_ext_cmd(char *command);
-void print_error(char *err_message);
-void printError(char *argVector, int count, char *command);
 
 /* BUILTIN COMMANDS */
-
-int cd();
+int pwd();
+int cd(char **args);
 int help();
 int env();
-int unsetenv();
-int setenv();
 int history();
 #endif
