@@ -16,7 +16,7 @@ int main(__attribute__((unused)) int argc, char **argv)
 	{
 		write(1, "$ ", 2);
 		i = _getline(&command, &n, stdin);
-		if (strcmp(command, "exit\n") == 0 || i == EOF)
+		if (i == EOF)
 		{
 			if (i == -1)
 				write(1, "\n", 1);

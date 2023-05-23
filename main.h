@@ -19,7 +19,7 @@ void get_last_command();		   /* get last command */
 /* BUILTIN COMMANDS */
 int pwd();
 int cd(char **args);
-ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 int env();
 int history();
+int exit_sh(char **cmds);
 #endif

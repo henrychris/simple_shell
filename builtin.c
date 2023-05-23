@@ -33,36 +33,6 @@ int cd(char **args)
 }
 
 /**
- * _getline - out getline function
- * @lineptr: lineptr
- * @n: size of line
- * @stream: stream
- * Return: ssize_t
- */
-ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
-{
-	size_t count = 1024;
-	ssize_t size;
-
-	if (*n == 0 && stream)
-	{
-		*lineptr = malloc(count * sizeof(char *));
-		if (!(*lineptr))
-		{
-			perror("File");
-			return (1);
-		}
-		size = read(0, *lineptr, count);
-		if (size == -1)
-		{
-			perror("File");
-			return (1);
-		}
-	}
-	return (0);
-}
-
-/**
  * env - get the environment
  * Return: 0 or 1
  */
@@ -80,14 +50,23 @@ int env(void)
 }
 
 /**
- * help - show help
+ * exit - show help
+ * Return: 0 or 1
+ */
+int exit_sh(char **cmds)
+{
+	free(cmds);
+	exit(0);
+}
+
+/**
+ * history - show history
  * Return: 0 or 1
  */
 int history(void)
 {
 	return (0);
 }
-
 /**
  * pwd - print the current directory
  * Return: 0 or 1

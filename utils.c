@@ -24,6 +24,13 @@ char **parse_command(char *command)
 	}
 	/* Null-terminate the commands array */
 	commands[i] = NULL;
+
+	/* if i < MAX_ARGC, free unused but allocated memory */
+	while (i < MAX_ARGC)
+	{
+		free(commands[i]);
+		i++;
+	}
 	return (commands);
 }
 
@@ -35,8 +42,8 @@ char **parse_command(char *command)
  */
 int exec_command(char **command)
 {
-	int (*commandFunctions[])(char **) = {cd, history, env, pwd};
-	const char *commandNames[] = {"cd", "history", "env", "pwd"};
+	int (*commandFunctions[])(char **) = {exit_sh, cd, history, env, pwd};
+	const char *commandNames[] = {"exit", "cd", "history", "env", "pwd"};
 
 	int numCommands = sizeof(commandNames) / sizeof(commandNames[0]);
 	int i = 0;
@@ -115,4 +122,41 @@ void print_error(char *argVector, int count, char *command)
 	write(STDERR_FILENO, ": not found\n", 12);
 
 	free(string);
+}
+
+/**
+ * _getline - out getline function
+ * @lineptr: lineptr
+ * @n: size of line
+ * @stream: stream
+ * Return: ssize_t
+ */
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
+{
+	size_t count = 1024;
+	ssize_t size = 0;
+
+	if (*n == 0 && stream)
+	{
+		/* free previous memory before use */
+		if (*lineptr != NULL)
+		{
+			free(*lineptr);
+			*lineptr = NULL;
+		}
+
+		*lineptr = malloc(count * sizeof(char *));
+		if (!(*lineptr))
+		{
+			perror("File");
+			return (1);
+		}
+		size = read(0, *lineptr, count);
+		if (size == -1)
+		{
+			perror("File");
+			return (1);
+		}
+	}
+	return (0);
 }
