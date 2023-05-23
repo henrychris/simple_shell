@@ -8,7 +8,7 @@
  */
 int main(__attribute__((unused))int argc, char **argv)
 {
-	char *command = NULL, **cmds;
+	char *command = NULL, **cmds = NULL;
 	int i = 0, count = 1, ret = 0;
 	size_t n = 0;
 
