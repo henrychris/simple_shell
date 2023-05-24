@@ -22,7 +22,15 @@ char **parse_command(char *command)
 	}
 	/* Null-terminate the commands array */
 	commands[i] = NULL;
-	free_ptr(&command);
+
+	while (i < MAX_ARGC)
+	{
+		free(commands[i]);
+		i++;
+	}
+
+	free(command);
+	command = NULL;
 	return (commands);
 }
 
@@ -47,6 +55,7 @@ int exec_command(char **command)
 		/* check if command exists in our array of command names */
 		if (strcmp(base_command, commandNames[i]) == 0)
 		{
+			free_ptr(&base_command);
 			/* The param is passed to the function that requires it */
 			return (commandFunctions[i](command));
 		}
@@ -65,6 +74,7 @@ int exec_command(char **command)
  */
 int execute_ext_cmd(char *base_command, char **args)
 {
+	int status = 0, ret = 0;
 	pid_t pid;
 	char *envp[] = {NULL};
 
@@ -74,20 +84,25 @@ int execute_ext_cmd(char *base_command, char **args)
 		free_double_ptr(&args);
 		return (-2);
 	}
-	/* TODO processing error? */
-	/* maybe use the stderror codes? */
+
 	if (pid == 0)
 	{
-		if (execve(base_command, args, envp) == -1)
+		ret = execve(base_command, args, envp);
+		if (ret == -1)
 		{
-			free_double_ptr(&args);
+			// free_double_ptr(&args);
 			perror("Failed to excute command");
 			exit(EXIT_FAILURE);
 		}
+		else if (ret == 0)
+		{
+			// free_double_ptr(&args);
+			exit(EXIT_SUCCESS);
+		}
 	}
-	wait(NULL);
-	free_double_ptr(&args);
-	return (0);
+	waitpid(pid, &status, 0);
+	// free_double_ptr(&args);
+	return (status);
 }
 
 /**

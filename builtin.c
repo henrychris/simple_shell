@@ -62,12 +62,13 @@ int pwd(__attribute__((unused))char **args)
 	if (getcwd(buff, PATH_MAX) == NULL)
 	{
 		perror("Error with getcwd() in pwd(void)");
+		free_ptr(&buff);
 		return (-2);
 	}
 
 	write(1, buff, strlen(buff));
 	write(1, "\n", 1);
 
-	free(buff);
+	free_ptr(&buff);
 	return (0);
 }
