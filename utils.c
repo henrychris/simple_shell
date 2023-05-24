@@ -22,6 +22,7 @@ char **parse_command(char *command)
 	}
 	/* Null-terminate the commands array */
 	commands[i] = NULL;
+	free_ptr(&command);
 	return (commands);
 }
 
@@ -69,15 +70,21 @@ int execute_ext_cmd(char *base_command, char **args)
 
 	pid = fork();
 	if (pid == -1)
+	{
+		free_double_ptr(&args);
 		return (-2);
+	}
 	/* TODO processing error? */
 	/* maybe use the stderror codes? */
 	if (pid == 0)
 	{
 		execve(base_command, args, envp);
+		free_double_ptr(&args);
+		kill(getpid(), SIGKILL);
 		return (1);
 	}
 	wait(NULL);
+	free_double_ptr(&args);
 	return (0);
 }
 
