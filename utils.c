@@ -90,18 +90,15 @@ int execute_ext_cmd(char *base_command, char **args)
 		ret = execve(base_command, args, envp);
 		if (ret == -1)
 		{
-			// free_double_ptr(&args);
 			perror("Failed to excute command");
 			exit(EXIT_FAILURE);
 		}
 		else if (ret == 0)
 		{
-			// free_double_ptr(&args);
 			exit(EXIT_SUCCESS);
 		}
 	}
 	waitpid(pid, &status, 0);
-	// free_double_ptr(&args);
 	return (status);
 }
 
