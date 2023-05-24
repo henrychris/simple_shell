@@ -13,13 +13,11 @@
 
 #define PATH_MAX 260
 
-int add_command_to_history(char *command); /* use linked list*/
-void get_last_command();		   /* get last command */
+extern char **environ;
 
 /* BUILTIN COMMANDS */
-int pwd();
+int pwd(__attribute__((unused))char **args);
 int cd(char **args);
-int help();
-int env();
-int history();
+int env(__attribute__((unused))char **args);
+
 #endif

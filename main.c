@@ -9,7 +9,7 @@
 int main(__attribute__((unused))int argc, char **argv)
 {
 	char *command = NULL, **cmds;
-	int count = 1, ret = 0, j = 0;
+	int count = 1, ret = 0;
 	size_t n = 0;
 
 	while (1)
@@ -17,42 +17,22 @@ int main(__attribute__((unused))int argc, char **argv)
 		printf("$ ");
 		if (getline(&command, &n, stdin) <= -1)
 		{
-			free(command);
-			command = NULL;
+			free_ptr(&command);
 			write(1, "\n", 1);
 			return (0);
 		}
 		if (strcmp(command, "exit\n") == 0)
 		{
-			free(command);
-			command = NULL;
-			return (0);
+			free_ptr(&command);
+			exit(0);
 		}
-
 		cmds = parse_command(command);
 		ret = exec_command(cmds);
-		/* -1 = command not found */
-		if (ret == -1)
+		if (ret == 1)
 			print_error(argv[0], count, command);
-		/* freeing command */
 		n = 0;
-		if (command != NULL)
-		{
-			free(command);
-			command = NULL;
-		}
-		/* freeing cmds */
-		for (j = 0; cmds[j] != NULL; j++)
-		{
-			free(cmds[j]);
-			cmds[j] = NULL;
-		}
-		if (cmds != NULL)
-		{
-			free(cmds);
-			cmds = NULL;
-		}
+		free_ptr(&command);
+		free_double_ptr(&cmds);
 		count++;
 	}
-	return (0);
 }

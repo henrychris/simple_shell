@@ -1,9 +1,9 @@
 #include "main.h"
 #include "utils.h"
 
-extern char **environ;
 /**
  * cd - changes the current working directory
+ * @args: args
  * Return: 0 on success, 1 on failure
  */
 int cd(char **args)
@@ -33,19 +33,11 @@ int cd(char **args)
 }
 
 /**
- * history - show history
- * Return: 0, or 1
- */
-int history(void)
-{
-	return (0);
-}
-
-/**
  * env - get the environment
+ * @args: args
  * Return: 0 or 1
  */
-int env(void)
+int env(__attribute__((unused))char **args)
 {
 	char **env = environ;
 
@@ -59,21 +51,14 @@ int env(void)
 }
 
 /**
- * help - show help
- * Return: 0 or 1
- */
-int help(void)
-{
-	return (0);
-}
-
-/**
  * pwd - print the current directory
+ * @args: args
  * Return: 0 or 1
  */
-int pwd(void)
+int pwd(__attribute__((unused))char **args)
 {
 	char *buff = malloc(sizeof(char) * PATH_MAX);
+
 	if (getcwd(buff, PATH_MAX) == NULL)
 	{
 		perror("Error with getcwd() in pwd(void)");
