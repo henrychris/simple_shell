@@ -78,10 +78,12 @@ int execute_ext_cmd(char *base_command, char **args)
 	/* maybe use the stderror codes? */
 	if (pid == 0)
 	{
-		execve(base_command, args, envp);
-		free_double_ptr(&args);
-		kill(getpid(), SIGKILL);
-		return (1);
+		if (execve(base_command, args, envp) == -1)
+		{
+			free_double_ptr(&args);
+			perror("Failed to excute command");
+			exit(EXIT_FAILURE);
+		}
 	}
 	wait(NULL);
 	free_double_ptr(&args);
