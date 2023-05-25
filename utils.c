@@ -22,14 +22,6 @@ char **parse_command(char *command)
 	}
 	/* Null-terminate the commands array */
 	commands[i] = NULL;
-
-	while (i < MAX_ARGC)
-	{
-		if (commands[i] != NULL)
-			free(commands[i]);
-		i++;
-	}
-
 	free_ptr(&command);
 	return (commands);
 }
@@ -74,7 +66,7 @@ int exec_command(char **command)
  */
 int execute_ext_cmd(char *base_command, char **args)
 {
-	int status = 0, ret = 0;
+	int status = 0;
 	pid_t pid;
 	char *envp[] = {NULL};
 
@@ -87,12 +79,10 @@ int execute_ext_cmd(char *base_command, char **args)
 
 	if (pid == 0)
 	{
-		ret = execve(base_command, args, envp);
-		if (ret == -1)
-		{
-			free_double_ptr(&args);
-			kill(getpid(), SIGKILL);
-		}
+		execve(base_command, args, envp);
+		free_double_ptr(&args);
+		kill(getpid(), SIGKILL);
+		return (1);
 	}
 	waitpid(pid, &status, 0);
 	free_double_ptr(&args);
