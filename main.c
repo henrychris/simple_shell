@@ -23,6 +23,7 @@ int main(__attribute__((unused)) int argc, char **argv)
 		cmds = parse_command(line);
 		if (!cmds[0])
 		{
+			free(line);
 			free(cmds);
 			continue;
 		}

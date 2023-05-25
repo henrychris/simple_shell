@@ -9,7 +9,7 @@ char **parse_command(char *command)
 {
 	int i = 0;
 	char **commands = malloc(MAX_ARGC * sizeof(char *));
-	char *token = strtok(command, " ,.!><|&;\"'\n\t\r");
+	char *token = strtok(command, DELIMS);
 
 	if (commands == NULL)
 	{
@@ -22,7 +22,7 @@ char **parse_command(char *command)
 		commands[i] = token;
 		/* Allocate memory for the token and copy its value */
 		i++;
-		token = strtok(NULL, " ,.!><|&;\"'\n\t\r");
+		token = strtok(NULL, DELIMS);
 	}
 
 	/* Null-terminate the commands array */
@@ -42,11 +42,20 @@ int exec_command(char **command)
 	pid_t child_pid;
 
 	child_pid = fork();
+	if (child_pid < 0)
+	{
+		perror("Error with fork().");
+		exit(1);
+	}
 	if (child_pid == 0)
 	{
-		execve(command[0], command, NULL);
+		if (execve(command[0], command, NULL) < 0)
+		{
+			perror("Error");
+			exit(1);
+		}
 	}
-	else 
+	else
 	{
 		waitpid(child_pid, &status, 0);
 	}
