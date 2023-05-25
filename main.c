@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 
 /**
  * main - main function for the shell
@@ -13,6 +13,7 @@ int main(__attribute__((unused)) int argc, __attribute__((unused)) char **argv)
 
 	while (1)
 	{
+		/* if the env isnt terminal, '$' isn't printed*/
 		if (isatty(STDIN_FILENO))
 			write(1, "$ ", 2);
 		if (getline(&line, &size, stdin) < 0)
