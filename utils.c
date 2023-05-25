@@ -64,13 +64,12 @@ int exec_command(char **command)
  * @args: an array of strings, tokenised from the original command
  * Return: an int value representing success or failure
  */
-int execute_ext_cmd(char *base_command, char **args)
+int execute_ext_cmd(__attribute__((unused))char *base_command, char **args)
 {
 	int status = 0;
 	pid_t pid;
 	/*char *envp[] = {NULL};*/
 
-	base_command = NULL;
 	pid = fork();
 	if (pid == -1)
 	{
