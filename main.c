@@ -13,7 +13,8 @@ int main(__attribute__((unused)) int argc, __attribute__((unused)) char **argv)
 
 	while (1)
 	{
-		write(1, "$ ", 2);
+		if (isatty(STDIN_FILENO))
+			write(1, "$ ", 2);
 		if (getline(&line, &size, stdin) < 0)
 		{
 			write(1, "\n", 1);
