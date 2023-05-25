@@ -32,9 +32,6 @@ int main(__attribute__((unused)) int argc, char **argv)
 			print_error(argv[0], count, command);
 		n = 0;
 		count++;
-		free_double_ptr(&cmds);
 	}
-	free_double_ptr(&cmds);
-	free_ptr(&command);
 	return (0);
 }
