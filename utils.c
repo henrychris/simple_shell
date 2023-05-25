@@ -68,8 +68,9 @@ int execute_ext_cmd(char *base_command, char **args)
 {
 	int status = 0;
 	pid_t pid;
-	char *envp[] = {NULL};
+	/*char *envp[] = {NULL};*/
 
+	base_command = NULL;
 	pid = fork();
 	if (pid == -1)
 	{
@@ -79,10 +80,9 @@ int execute_ext_cmd(char *base_command, char **args)
 
 	if (pid == 0)
 	{
-		/*execve(base_command, args, envp);
+		/*execve(base_command, args, envp);*/
 		free_double_ptr(&args);
-		kill(getpid(), SIGKILL);*/
-		free_double_ptr(&args);
+		kill(getpid(), SIGKILL);
 		return (1);
 	}
 	waitpid(pid, &status, 0);
