@@ -1,36 +1,32 @@
 #include "utils.h"
 
 /**
- * parse_command - parses the command and tokenises it
- * @command: command to parse
- * Return: An array consisting of command and arguments (if any)
+ * parse_command - parse a command into an array of strings
+ * @command: a string representing a command
+ * Return: an array of strings representing the command
  */
 char **parse_command(char *command)
 {
 	int i = 0;
-	char *token = strtok(command, DELIMS);
 	char **commands = malloc(MAX_ARGC * sizeof(char *));
+	char *token = strtok(command, " ,.!><|&;\"'\n\t\r");
+
+	if (commands == NULL)
+	{
+		perror("Malloc failed");
+		exit(1);
+	}
 
 	while (token != NULL && i < MAX_ARGC)
 	{
+		commands[i] = token;
 		/* Allocate memory for the token and copy its value */
-		commands[i] = malloc(strlen(token) + 1);
-		strcpy(commands[i], token);
-
 		i++;
-		token = strtok(NULL, DELIMS);
+		token = strtok(NULL, " ,.!><|&;\"'\n\t\r");
 	}
+
 	/* Null-terminate the commands array */
 	commands[i] = NULL;
-
-	while (i < MAX_ARGC)
-	{
-		free(commands[i]);
-		i++;
-	}
-
-	free(command);
-	command = NULL;
 	return (commands);
 }
 
@@ -42,94 +38,18 @@ char **parse_command(char *command)
  */
 int exec_command(char **command)
 {
-	int (*commandFunctions[])(char **) = {cd, env, pwd};
-	const char *commandNames[] = {"cd", "env", "pwd"};
+	int status;
+	pid_t child_pid;
 
-	int numCommands = sizeof(commandNames) / sizeof(commandNames[0]);
-	int i = 0;
-	/* the main command is the first item in the array */
-	char *base_command = command[i];
-
-	for (i = 0; i < numCommands; i++)
+	child_pid = fork();
+	if (child_pid == 0)
 	{
-		/* check if command exists in our array of command names */
-		if (strcmp(base_command, commandNames[i]) == 0)
-		{
-			free_ptr(&base_command);
-			/* The param is passed to the function that requires it */
-			return (commandFunctions[i](command));
-		}
+		execve(command[0], command, NULL);
+	}
+	else 
+	{
+		waitpid(child_pid, &status, 0);
 	}
 
-	/* if not found, try to run externa; function */
-	return (execute_ext_cmd(base_command, command));
-}
-
-/**
- * execute_ext_cmd - execute external programs
- * @base_command: the program being called, the first arg
- * in args
- * @args: an array of strings, tokenised from the original command
- * Return: an int value representing success or failure
- */
-int execute_ext_cmd(char *base_command, char **args)
-{
-	int status = 0, ret = 0;
-	pid_t pid;
-	char *envp[] = {NULL};
-
-	pid = fork();
-	if (pid == -1)
-	{
-		free_double_ptr(&args);
-		return (-2);
-	}
-
-	if (pid == 0)
-	{
-		ret = execve(base_command, args, envp);
-		if (ret == -1)
-		{
-			perror("Failed to excute command");
-			exit(EXIT_FAILURE);
-		}
-		else if (ret == 0)
-		{
-			exit(EXIT_SUCCESS);
-		}
-	}
-	waitpid(pid, &status, 0);
-	return (status);
-}
-
-/**
- * print_error - print error message
- * @argVector: argv
- * @count: count it
- * @command: command
- * Return: nothing
- */
-void print_error(char *argVector, int count, char *command)
-{
-	char *string = malloc(sizeof(char) * (strlen(command)));
-	int i = 0;
-	char numberString[10];
-
-	sprintf(numberString, "%d", count);
-	write(STDERR_FILENO, argVector, strlen(argVector));
-	write(STDERR_FILENO, ": ", 2);
-	while (numberString[i] != '\0')
-		i++;
-	write(STDERR_FILENO, numberString, i);
-	i = 0;
-	write(STDERR_FILENO, ": ", 2);
-	while (command[i] != '\n' && command[i] != '\0')
-	{
-		string[i] = command[i];
-		i++;
-	}
-	write(STDERR_FILENO, string, i);
-	write(STDERR_FILENO, ": not found\n", 12);
-
-	free(string);
+	return (0);
 }
