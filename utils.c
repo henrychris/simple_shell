@@ -25,12 +25,12 @@ char **parse_command(char *command)
 
 	while (i < MAX_ARGC)
 	{
-		free(commands[i]);
+		if (commands[i] != NULL)
+			free(commands[i]);
 		i++;
 	}
 
-	free(command);
-	command = NULL;
+	free_ptr(&command);
 	return (commands);
 }
 
