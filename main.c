@@ -33,5 +33,4 @@ int main(__attribute__((unused)) int argc, char **argv)
 		n = 0;
 		count++;
 	}
-	return (0);
 }
