@@ -9,7 +9,7 @@
 int main(__attribute__((unused)) int argc, __attribute__((unused)) char **argv)
 {
 	/* check 1, 2 & 3 passed */
-	int count = 0;
+	int count = 1;
 	char *line = NULL, **cmds = NULL;
 	size_t size = 0;
 
