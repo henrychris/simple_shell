@@ -1,4 +1,5 @@
 #include "shell.h"
+#define PATH "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 /**
  * parse_command - parse a command into an array of strings
@@ -87,7 +88,7 @@ int exec_command(char **command, int count, char *program_name)
  */
 char *find_command(char *command)
 {
-	char *path = getenv("PATH");
+	char *path = "PATH";
 	char *path_copy;
 	char *directory;
 
