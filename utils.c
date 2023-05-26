@@ -41,7 +41,7 @@ char **parse_command(char *command)
 int exec_command(char **command, int count, char *program_name)
 {
 	int status;
-	char *cmd;
+	char *cmd = NULL;
 	pid_t child_pid;
 
 	if (command[0][0] == '.')
@@ -75,7 +75,6 @@ int exec_command(char **command, int count, char *program_name)
 	{
 		waitpid(child_pid, &status, 0);
 	}
-	free(cmd);
 	return (0);
 }
 
