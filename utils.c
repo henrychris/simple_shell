@@ -34,16 +34,16 @@ char **parse_command(char *command)
  * exec_command - execute a command. First checks for builtins, then
  * ext programs
  * @command: an array of a strings representing parts of a command
+ * @count: the number of commands executed so far
+ * @program_name: the name of the program
  * Return: an int representing success or failure.
  */
-int exec_command(char **command)
+int exec_command(char **command, int count, char *program_name)
 {
 	int status;
 	char *cmd;
 	pid_t child_pid;
 
-	/* if starts with period, use execve */
-	/* if starts with '/' or normal word, find command*/
 	if (command[0][0] == '.')
 	{
 	}
@@ -51,7 +51,10 @@ int exec_command(char **command)
 	{
 		cmd = find_command(command[0]);
 		if (cmd == NULL)
+		{
+			_perror(count, command[0], program_name);
 			return (1);
+		}
 		_strcpy(command[0], cmd);
 	}
 
@@ -65,7 +68,7 @@ int exec_command(char **command)
 	{
 		if (execve(command[0], command, NULL) < 0)
 		{
-			perror("Error");
+			_perror(count, command[0], program_name);
 			exit(1);
 		}
 	}
@@ -73,7 +76,6 @@ int exec_command(char **command)
 	{
 		waitpid(child_pid, &status, 0);
 	}
-
 	free(cmd);
 	return (0);
 }

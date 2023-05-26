@@ -9,6 +9,7 @@
 int main(__attribute__((unused)) int argc, __attribute__((unused)) char **argv)
 {
 	/* check 1, 2 & 3 passed */
+	int count = 0;
 	char *line = NULL, **cmds = NULL;
 	size_t size = 0;
 
@@ -19,7 +20,6 @@ int main(__attribute__((unused)) int argc, __attribute__((unused)) char **argv)
 			write(1, "$ ", 2);
 		if (getline(&line, &size, stdin) < 0)
 		{
-			/* write(1, "\n", 1); */
 			free(line);
 			return (0);
 		}
@@ -31,8 +31,9 @@ int main(__attribute__((unused)) int argc, __attribute__((unused)) char **argv)
 			free(cmds);
 			continue;
 		}
-		exec_command(cmds);
+		exec_command(cmds, count, argv[0]);
 		free(cmds);
+		count++;
 	}
 	return (0);
 }
