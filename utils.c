@@ -39,10 +39,14 @@ char **parse_command(char *command)
 int exec_command(char **command)
 {
 	int status;
+	char *cmd;
 	pid_t child_pid;
 
-	/* find the command here */
-	/* if no found, throw error */
+	cmd = find_command(command[0]);
+	if (cmd == NULL)
+		return (1);
+	_strcpy(command[0], cmd);
+
 	child_pid = fork();
 	if (child_pid < 0)
 	{
@@ -62,6 +66,7 @@ int exec_command(char **command)
 		waitpid(child_pid, &status, 0);
 	}
 
+	free(cmd);
 	return (0);
 }
 
@@ -79,6 +84,9 @@ char *find_command(char *command)
 	if (!path)
 		return (NULL);
 
+	if (access(command, X_OK) == 0)
+		return (command);
+
 	path_copy = _strdup(path);
 	directory = strtok(path_copy, ":");
 
@@ -92,7 +100,7 @@ char *find_command(char *command)
 
 		if (access(full_path, X_OK) == 0)
 		{
-			printf("Found command: %s\n", full_path);
+			/* printf("Found command: %s\n", full_path); */
 			free(path_copy);
 			return (_strdup(full_path));
 		}
