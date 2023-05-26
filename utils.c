@@ -65,6 +65,8 @@ int exec_command(char **command, int count, char *program_name)
 	}
 	if (child_pid == 0)
 	{
+		if (cmd == NULL)
+			cmd = command[0];
 		if (execve(cmd, command, NULL) < 0)
 		{
 			_perror(count, command[0], program_name);
