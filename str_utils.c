@@ -55,3 +55,47 @@ int _strcpy(char *dest, char *src)
 	dest[i] = '\0';
 	return (i);
 }
+
+/**
+ * _strdup - strdup()
+ * @s: string
+ * Return: duplicate of s
+ */
+char *_strdup(char *s)
+{
+	size_t len = _strlen(s) + 1;
+	char *new_str = malloc(len);
+
+	if (new_str == NULL)
+	{
+		return (NULL);
+	}
+	_memcpy(new_str, s, len);
+
+	return (new_str);
+}
+
+/**
+ * _strcat - concatenate 2 strings
+ * @dest: destination string
+ * @src: source string
+ * Return: concatenated string
+ */
+char *_strcat(char *dest, const char *src)
+{
+	char *p = dest;
+	int i = 0, j = 0;
+
+	while (dest[i] != '\0')
+	{
+		i++;
+	}
+	while (src[j] != '\0')
+	{
+		p[i] = src[j];
+		i++;
+		j++;
+	}
+	p[i] = '\0';
+	return (p);
+}

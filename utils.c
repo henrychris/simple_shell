@@ -41,6 +41,8 @@ int exec_command(char **command)
 	int status;
 	pid_t child_pid;
 
+	/* find the command here */
+	/* if no found, throw error */
 	child_pid = fork();
 	if (child_pid < 0)
 	{
@@ -61,4 +63,42 @@ int exec_command(char **command)
 	}
 
 	return (0);
+}
+
+/**
+ * find_command - find a command in the PATH
+ * @command: a string representing a command
+ * Return: an int representing success or failure
+ */
+char *find_command(char *command)
+{
+	char *path = getenv("PATH");
+	char *path_copy;
+	char *directory;
+
+	if (!path)
+		return (NULL);
+
+	path_copy = _strdup(path);
+	directory = strtok(path_copy, ":");
+
+	while (directory)
+	{
+		char full_path[1024];
+
+		_strcpy(full_path, directory);
+		_strcat(full_path, "/");
+		_strcat(full_path, command);
+
+		if (access(full_path, X_OK) == 0)
+		{
+			printf("Found command: %s\n", full_path);
+			free(path_copy);
+			return (_strdup(full_path));
+		}
+		directory = strtok(NULL, ":");
+	}
+
+	free(path_copy);
+	return (NULL);
 }
