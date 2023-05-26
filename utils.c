@@ -88,7 +88,7 @@ int exec_command(char **command, int count, char *program_name)
  */
 char *find_command(char *command)
 {
-	char *path = "PATH";
+	char *path = PATH;
 	char *path_copy;
 	char *directory;
 
