@@ -11,7 +11,7 @@
 
 
 #define PATH_MAX 260
-#define DELIMS " ,.!><|&;\"'\n\t\r"
+#define DELIMS " ,!><|&;\"'\n"
 #define MAX_ARGC 10
 
 char **parse_command(char *input);
