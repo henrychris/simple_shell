@@ -55,7 +55,6 @@ int exec_command(char **command, int count, char *program_name)
 			_perror(count, command[0], program_name);
 			return (1);
 		}
-		_strcpy(command[0], cmd);
 	}
 
 	child_pid = fork();
@@ -66,7 +65,7 @@ int exec_command(char **command, int count, char *program_name)
 	}
 	if (child_pid == 0)
 	{
-		if (execve(command[0], command, NULL) < 0)
+		if (execve(cmd, command, NULL) < 0)
 		{
 			_perror(count, command[0], program_name);
 			exit(1);
