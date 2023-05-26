@@ -18,19 +18,15 @@ int main(__attribute__((unused)) int argc, __attribute__((unused)) char **argv)
 			write(1, "$ ", 2);
 		if (getline(&line, &size, stdin) < 0)
 		{
-			write(1, "\n", 1);
+			/* write(1, "\n", 1); */
 			free(line);
 			return (0);
 		}
 		if (line[0] == '\n' || line[0] == '\0')
-		{
-			free(line);
 			continue;
-		}
 		cmds = parse_command(line);
 		if (!cmds[0])
 		{
-			free(line);
 			free(cmds);
 			continue;
 		}
