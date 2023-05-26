@@ -42,10 +42,18 @@ int exec_command(char **command)
 	char *cmd;
 	pid_t child_pid;
 
-	cmd = find_command(command[0]);
-	if (cmd == NULL)
-		return (1);
-	_strcpy(command[0], cmd);
+	/* if starts with period, use execve */
+	/* if starts with '/' or normal word, find command*/
+	if (command[0][0] == '.')
+	{
+	}
+	else
+	{
+		cmd = find_command(command[0]);
+		if (cmd == NULL)
+			return (1);
+		_strcpy(command[0], cmd);
+	}
 
 	child_pid = fork();
 	if (child_pid < 0)
