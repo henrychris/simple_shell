@@ -13,6 +13,8 @@
 #define DELIMS " ,!><|&;\"'\n"
 #define MAX_ARGC 10
 
+extern char **environ;
+
 char **parse_command(char *input);
 int exec_command(char **command, int count, char *program_name);
 char *find_command(char *command);
@@ -33,5 +35,7 @@ void _write(char *s);
 int _putchar(char c);
 void write_number(int number);
 /* QoL UTILS */
+ /* Builtin */
+int env(void);
 
 #endif

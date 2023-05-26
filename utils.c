@@ -50,6 +50,11 @@ int exec_command(char **command, int count, char *program_name)
 	}
 	else
 	{
+		if (_strcmp(command[0], "env") == 0)
+		{
+			env();
+			return (0);
+		}
 		cmd = find_command(command[0]);
 		if (cmd == NULL)
 		{
