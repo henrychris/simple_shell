@@ -17,4 +17,11 @@
 char **parse_command(char *input);
 int exec_command(char **command);
 
+
+/* STRING UTILS */
+
+int _strlen(const char *str);
+int _strcmp(const char *str1, const char *str2);
+int _strcpy(char *dest, char *src);
+/* STRING UTILS */
 #endif
