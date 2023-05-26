@@ -17,6 +17,7 @@ char **parse_command(char *input);
 int exec_command(char **command, int count, char *program_name);
 char *find_command(char *command);
 void _perror(int count, char *command, char *program_name);
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 
 /* STRING UTILS */
 int _strlen(const char *str);

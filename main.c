@@ -18,7 +18,7 @@ int main(__attribute__((unused)) int argc, __attribute__((unused)) char **argv)
 		/* if the env isnt terminal, '$' isn't printed*/
 		if (isatty(STDIN_FILENO))
 			write(1, "$ ", 2);
-		if (getline(&line, &size, stdin) < 0)
+		if (_getline(&line, &size, stdin) < 0)
 		{
 			free(line);
 			return (0);
