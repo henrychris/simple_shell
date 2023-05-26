@@ -38,10 +38,9 @@ char **parse_command(char *command)
  */
 int exec_command(char **command)
 {
-	int status, a = 0;
-	size_t len = strlen(command[0]) + 5;
+	int status;
+	char *cmd;
 	pid_t child_pid;
-	char *str = malloc(sizeof(char) * len);
 
 	/* if starts with period, use execve */
 	/* if starts with '/' or normal word, find command*/
@@ -64,14 +63,7 @@ int exec_command(char **command)
 	}
 	if (child_pid == 0)
 	{
-		if (a == 1)
-		{
-			if(execve(str, command, NULL) < 0)
-			{
-				perror("Error");
-				exit(1);
-			}
-		} else if (execve(command[0], command, NULL) < 0)
+		if (execve(command[0], command, NULL) < 0)
 		{
 			perror("Error");
 			exit(1);
@@ -82,5 +74,47 @@ int exec_command(char **command)
 		waitpid(child_pid, &status, 0);
 	}
 
+	free(cmd);
 	return (0);
+}
+
+/**
+ * find_command - find a command in the PATH
+ * @command: a string representing a command
+ * Return: an int representing success or failure
+ */
+char *find_command(char *command)
+{
+	char *path = getenv("PATH");
+	char *path_copy;
+	char *directory;
+
+	if (!path)
+		return (NULL);
+
+	if (access(command, X_OK) == 0)
+		return (command);
+
+	path_copy = _strdup(path);
+	directory = strtok(path_copy, ":");
+
+	while (directory)
+	{
+		char full_path[1024];
+
+		_strcpy(full_path, directory);
+		_strcat(full_path, "/");
+		_strcat(full_path, command);
+
+		if (access(full_path, X_OK) == 0)
+		{
+			/* printf("Found command: %s\n", full_path); */
+			free(path_copy);
+			return (_strdup(full_path));
+		}
+		directory = strtok(NULL, ":");
+	}
+
+	free(path_copy);
+	return (NULL);
 }
