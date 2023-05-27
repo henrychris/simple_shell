@@ -52,7 +52,7 @@ int exec_command(char **command, int count, char *program_name)
 			return (0);
 		} else if (_strcmp(command[0], "cd") == 0)
 		{
-			cd(command[1]);
+			cd(count, command[1], program_name);
 			return (0);
 		}
 		cmd = find_command(command[0]);

@@ -37,6 +37,6 @@ void write_number(int number);
 /* QoL UTILS */
  /* Builtin */
 int env(void);
-int cd(char *args);
-
+int cd(int count, char *args, char *program_name);
+void _perror_cd(int count, char *command, char *program_name);
 #endif
