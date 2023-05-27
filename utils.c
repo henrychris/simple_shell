@@ -95,7 +95,7 @@ char *find_command(char *command)
 	char *directory;
 
 	path = getenv("PATH");
-	if (!path)
+	if (!path || _strcmp(path, "") == 0)
 	{
 		path = PATH;
 	}
