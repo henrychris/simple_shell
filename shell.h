@@ -50,4 +50,9 @@ int cd(int count, char *args, char *program_name);
 void _perror_cd(int count, char *command, char *program_name);
 int exit_shell(char **command, char *line, int count, char *program_name);
 /* Builtin */
+
+/* Extra Points */
+char *_strtok(char *str, char const *delim);
+int isCharInString(const char *str, char c);
+/* Extra Points*/
 #endif

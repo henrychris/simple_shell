@@ -10,7 +10,7 @@ char **parse_command(char *command)
 {
 	int i = 0;
 	char **commands = malloc(MAX_ARGC * sizeof(char *));
-	char *token = strtok(command, DELIMS);
+	char *token = _strtok(command, DELIMS);
 
 	if (commands == NULL)
 	{
@@ -23,7 +23,7 @@ char **parse_command(char *command)
 		commands[i] = token;
 		/* Allocate memory for the token and copy its value */
 		i++;
-		token = strtok(NULL, DELIMS);
+		token = _strtok(NULL, DELIMS);
 	}
 
 	/* Null-terminate the commands array */
@@ -104,7 +104,7 @@ char *find_command(char *command)
 		return (command);
 
 	path_copy = _strdup(path);
-	directory = strtok(path_copy, ":");
+	directory = _strtok(path_copy, ":");
 
 	while (directory)
 	{
@@ -120,7 +120,7 @@ char *find_command(char *command)
 			free(path_copy);
 			return (_strdup(full_path));
 		}
-		directory = strtok(NULL, ":");
+		directory = _strtok(NULL, ":");
 	}
 
 	free(path_copy);
