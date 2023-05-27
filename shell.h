@@ -44,6 +44,7 @@ int is_valid_positive_integer(const char *str);
 /* QoL UTILS */
 
 /* Builtin */
+int execute_builtin_command(char **command, int count, char *program_name, char *line);
 int env(void);
 int cd(int count, char *args, char *program_name);
 void _perror_cd(int count, char *command, char *program_name);

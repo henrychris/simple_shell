@@ -47,12 +47,10 @@ int exec_command(char **command, int count, char *program_name, char *line)
 
 	if (command[0][0] != '.')
 	{
-		if (_strcmp(command[0], "env") == 0)
-			return (env());
-		else if (_strcmp(command[0], "cd") == 0)
-			return (cd(count, command[1], program_name));
-		else if (_strcmp(command[0], "exit") == 0)
-			return (exit_shell(command, line, count, program_name));
+		int result = execute_builtin_command(command, count, program_name, line);
+
+		if (result != -1)
+			return (result);
 
 		base_command = find_command(command[0]);
 		if (base_command == NULL)
@@ -127,4 +125,24 @@ char *find_command(char *command)
 
 	free(path_copy);
 	return (NULL);
+}
+
+/**
+ * execute_builtin_command - execute a builtin command
+ * @cmd: an array of a strings representing parts of a command
+ * @count: the number of commands executed so far
+ * @p_name: the name of the program
+ * @line: the line of input from the user
+ * Return: an int representing success or failure.
+ */
+int execute_builtin_command(char **cmd, int count, char *p_name, char *line)
+{
+	if (_strcmp(cmd[0], "env") == 0)
+		return (env());
+	else if (_strcmp(cmd[0], "cd") == 0)
+		return (cd(count, cmd[1], p_name));
+	else if (_strcmp(cmd[0], "exit") == 0)
+		return (exit_shell(cmd, line, count, p_name));
+
+	return (-1); /* Indicate that the command is not a built-in command*/
 }
