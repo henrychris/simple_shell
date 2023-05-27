@@ -42,19 +42,17 @@ char **parse_command(char *command)
 int exec_command(char **command, int count, char *program_name)
 {
 	int status, child_pid;
-	char *cmd = NULL;
+	char *base_command = NULL;
 
 	if (command[0][0] != '.')
 	{
 		if (_strcmp(command[0], "env") == 0)
 			return (env());
 		else if (_strcmp(command[0], "cd") == 0)
-		{
-			cd(count, command[1], program_name);
-			return (0);
-		}
-		cmd = find_command(command[0]);
-		if (cmd == NULL)
+			return (cd(count, command[1], program_name));
+
+		base_command = find_command(command[0]);
+		if (base_command == NULL)
 		{
 			_perror(count, command[0], program_name);
 			return (1);
@@ -68,9 +66,9 @@ int exec_command(char **command, int count, char *program_name)
 	}
 	if (child_pid == 0)
 	{
-		if (cmd == NULL)
-			cmd = command[0];
-		if (execve(cmd, command, NULL) < 0)
+		if (base_command == NULL)
+			base_command = command[0];
+		if (execve(base_command, command, NULL) < 0)
 		{
 			_perror(count, command[0], program_name);
 			exit(2);
@@ -79,6 +77,7 @@ int exec_command(char **command, int count, char *program_name)
 	wait(&status);
 	if (WIFEXITED(status))
 		exit_code = (WEXITSTATUS(status));
+	free(base_command);
 	return (exit_code);
 }
 
