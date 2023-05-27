@@ -10,7 +10,7 @@
 #include <sys/wait.h>
 
 #define PATH_MAX 260
-#define DELIMS " ,!><|&;\"'\n"
+#define DELIMS " \n"
 #define MAX_ARGC 10
 
 extern char **environ;
@@ -52,7 +52,7 @@ int exit_shell(char **command, char *line, int count, char *program_name);
 /* Builtin */
 
 /* Extra Points */
-char *remwspaces(char *s);
+void remwspaces(char *s);
 int wspace(char s);
 char *_strtok(char *str, char const *delim);
 int isCharInString(const char *str, char c);

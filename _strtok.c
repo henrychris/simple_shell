@@ -22,6 +22,65 @@ int isCharInString(const char *str, char c)
 }
 
 /**
+ * remwspaces - removes extra whitespaces
+ * @s: string
+ * Return: str w/o whitespace
+ */
+void remwspaces(char *s)
+{
+	int length = _strlen(s);
+	int i = 0, j = length - 1, k;
+	int l, count, m;
+
+	if (s == NULL)
+		return;
+
+	while (i < length && wspace(s[i]))
+	{
+		i++;
+	}
+	while (j >= i && wspace(s[j]))
+	{
+		j--;
+	}
+	k = 0;
+	while (i <= j)
+	{
+		s[k++] = s[i++];
+	}
+	s[k] = '\0';
+	l = 0;
+	count = 0;
+	for (m = 0; m <= j; m++)
+	{
+		if (s[m] != ' ')
+		{
+			s[l++] = s[m];
+			count = 0;
+		}
+		else if (count == 0)
+		{
+			s[l++] = s[m];
+			count++;
+		}
+	}
+	s[l] = '\0';
+}
+
+/**
+ * wspace - checks if char is a whitespace
+ * @s: char
+ * Return: 1 if true, 0 if false
+ */
+int wspace(char s)
+{
+	if (s == ' ' || s == '\t')
+		return (1);
+
+	return (0);
+}
+
+/**
  * _strtok - strtok implementation
  * @str: string
  * @delim: delimiter

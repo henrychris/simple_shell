@@ -28,6 +28,7 @@ int main(__attribute__((unused)) int argc, __attribute__((unused)) char **argv)
 		if (line[0] == '\n' || line[0] == '\0')
 			continue;
 
+		remwspaces(line);
 		cmds = parse_command(line);
 		if (!cmds[0])
 		{
