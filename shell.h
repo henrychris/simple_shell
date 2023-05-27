@@ -37,5 +37,6 @@ void write_number(int number);
 /* QoL UTILS */
  /* Builtin */
 int env(void);
+int cd(char *args);
 
 #endif

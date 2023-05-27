@@ -41,18 +41,18 @@ char **parse_command(char *command)
  */
 int exec_command(char **command, int count, char *program_name)
 {
-	int status;
+	int status, child_pid;
 	char *cmd = NULL;
-	pid_t child_pid;
 
-	if (command[0][0] == '.')
-	{
-	}
-	else
+	if (command[0][0] != '.')
 	{
 		if (_strcmp(command[0], "env") == 0)
 		{
 			env();
+			return (0);
+		} else if (_strcmp(command[0], "cd") == 0)
+		{
+			cd(command[1]);
 			return (0);
 		}
 		cmd = find_command(command[0]);
@@ -62,7 +62,6 @@ int exec_command(char **command, int count, char *program_name)
 			return (1);
 		}
 	}
-
 	child_pid = fork();
 	if (child_pid < 0)
 	{
@@ -80,9 +79,7 @@ int exec_command(char **command, int count, char *program_name)
 		}
 	}
 	else
-	{
 		waitpid(child_pid, &status, 0);
-	}
 	return (0);
 }
 
