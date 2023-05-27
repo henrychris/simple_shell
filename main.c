@@ -27,18 +27,14 @@ int main(__attribute__((unused)) int argc, __attribute__((unused)) char **argv)
 		}
 		if (line[0] == '\n' || line[0] == '\0')
 			continue;
-		if (_strcmp(line, "exit\n") == 0)
-		{
-			free(line);
-			exit(exit_code);
-		}
+
 		cmds = parse_command(line);
 		if (!cmds[0])
 		{
 			free(cmds);
 			continue;
 		}
-		exit_code = exec_command(cmds, count, argv[0]);
+		exit_code = exec_command(cmds, count, argv[0], line);
 		free(cmds);
 		count++;
 	}

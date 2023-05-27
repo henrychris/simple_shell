@@ -51,11 +51,11 @@ int cd(int count, char *args, char *program_name)
 }
 
 /**
-  * _perror_cd - perror cd
-  * @count: count
-  * @command: command
-  * @program_name: p_name
-  */
+ * _perror_cd - perror cd
+ * @count: count
+ * @command: command
+ * @program_name: p_name
+ */
 void _perror_cd(int count, char *command, char *program_name)
 {
 	_write(program_name);
@@ -64,4 +64,39 @@ void _perror_cd(int count, char *command, char *program_name)
 	_write(": cd: can't cd to ");
 	_write(command);
 	_write("\n");
+}
+
+/**
+ * exit_shell - exit the shell
+ * @command: command
+ * @line: line of input
+ * @count: count
+ * @program_name: p_name
+ * Return: void
+ */
+int exit_shell(char **command, char *line, int count, char *program_name)
+{
+	int status;
+
+	if (command[1])
+	{
+		status = _atoi(command[1]);
+		if (status == -1)
+		{
+			_write(program_name);
+			_write(": ");
+			write_number(count);
+			_write(": ");
+			_write("Illegal number: ");
+			_write(command[1]);
+			_write("\n");
+			return (2);
+		}
+		free(line);
+		free(command);
+		exit(status);
+	}
+	free(line);
+	free(command);
+	exit(0);
 }

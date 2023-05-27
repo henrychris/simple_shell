@@ -17,7 +17,7 @@ extern char **environ;
 extern int exit_code;
 
 char **parse_command(char *input);
-int exec_command(char **command, int count, char *program_name);
+int exec_command(char **command, int count, char *program_name, char *line);
 char *find_command(char *command);
 void _perror(int count, char *command, char *program_name);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
@@ -36,10 +36,13 @@ void *_memcpy(void *dest, void *src, size_t n);
 void _write(char *s);
 int _putchar(char c);
 void write_number(int number);
+int _atoi(const char *str);
 /* QoL UTILS */
- /* Builtin */
+
+/* Builtin */
 int env(void);
 int cd(int count, char *args, char *program_name);
 void _perror_cd(int count, char *command, char *program_name);
- /* Builtin */
+int exit_shell(char **command, char *line, int count, char *program_name);
+/* Builtin */
 #endif

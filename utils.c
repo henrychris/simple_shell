@@ -37,9 +37,10 @@ char **parse_command(char *command)
  * @command: an array of a strings representing parts of a command
  * @count: the number of commands executed so far
  * @program_name: the name of the program
+ * @line: the line of input from the user
  * Return: an int representing success or failure.
  */
-int exec_command(char **command, int count, char *program_name)
+int exec_command(char **command, int count, char *program_name, char *line)
 {
 	int status, child_pid;
 	char *base_command = NULL;
@@ -50,6 +51,8 @@ int exec_command(char **command, int count, char *program_name)
 			return (env());
 		else if (_strcmp(command[0], "cd") == 0)
 			return (cd(count, command[1], program_name));
+		else if (_strcmp(command[0], "exit") == 0)
+			return (exit_shell(command, line, count, program_name));
 
 		base_command = find_command(command[0]);
 		if (base_command == NULL)
