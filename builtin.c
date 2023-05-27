@@ -98,5 +98,5 @@ int exit_shell(char **command, char *line, int count, char *program_name)
 	}
 	free(line);
 	free(command);
-	exit(0);
+	exit(exit_code);
 }
