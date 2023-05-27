@@ -80,8 +80,7 @@ int exit_shell(char **command, char *line, int count, char *program_name)
 
 	if (command[1])
 	{
-		status = _atoi(command[1]);
-		if (status == -1)
+		if (!is_valid_positive_integer(command[1]))
 		{
 			_write(program_name);
 			_write(": ");
@@ -92,6 +91,7 @@ int exit_shell(char **command, char *line, int count, char *program_name)
 			_write("\n");
 			return (2);
 		}
+		status = _atoi(command[1]);
 		free(line);
 		free(command);
 		exit(status);

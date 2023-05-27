@@ -37,6 +37,8 @@ void _write(char *s);
 int _putchar(char c);
 void write_number(int number);
 int _atoi(const char *str);
+int _is_digit(char c);
+int is_valid_positive_integer(const char *str);
 /* QoL UTILS */
 
 /* Builtin */

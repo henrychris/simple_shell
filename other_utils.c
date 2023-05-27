@@ -22,3 +22,32 @@ int _atoi(const char *str)
 
 	return (n * sign);
 }
+
+/**
+ * is_digit - checks if a character is a digit
+ * @c: character to check
+ * Return: 1 if c is a digit, 0 otherwise
+ */
+int _is_digit(char c)
+{
+	return (c >= '0' && c <= '9');
+}
+
+int is_valid_positive_integer(const char *str)
+{
+	if (str == NULL || *str == '\0')
+	{
+		return (0);
+	}
+
+	while (*str)
+	{
+		if (!_is_digit(*str))
+		{
+			return (0);
+		}
+		str++;
+	}
+
+	return (1);
+}
