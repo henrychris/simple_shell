@@ -80,7 +80,7 @@ int exec_command(char **command, int count, char *program_name, char *line)
 	wait(&status);
 	if (WIFEXITED(status))
 		exit_code = (WEXITSTATUS(status));
-	/* free(base_command);*/
+	free(base_command);
 	return (exit_code);
 }
 

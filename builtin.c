@@ -86,6 +86,8 @@ int exit_shell(char **command, char *line, int count, char *program_name)
 			_write_err(": ");
 			write_number(count, 2);
 			_write_err(": ");
+			_write_err(command[0]);
+			_write_err(": ");
 			_write_err("Illegal number: ");
 			_write_err(command[1]);
 			_write_err("\n");
