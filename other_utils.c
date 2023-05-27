@@ -24,7 +24,7 @@ int _atoi(const char *str)
 }
 
 /**
- * is_digit - checks if a character is a digit
+ * _is_digit - checks if a character is a digit
  * @c: character to check
  * Return: 1 if c is a digit, 0 otherwise
  */
@@ -33,6 +33,11 @@ int _is_digit(char c)
 	return (c >= '0' && c <= '9');
 }
 
+/**
+ * is_valid_positive_integer - check stuff
+ * @str: a string
+ * Return: an int sha
+*/
 int is_valid_positive_integer(const char *str)
 {
 	if (str == NULL || *str == '\0')
@@ -50,4 +55,32 @@ int is_valid_positive_integer(const char *str)
 	}
 
 	return (1);
+}
+
+/**
+ * _write_err - prints a character to stderr
+ * @s: string input
+ * Return: number of characters printed
+ */
+int _write_err(char *s)
+{
+	int i = 0;
+
+	while (s[i] != '\0')
+	{
+		_putchar_err(s[i]);
+		i++;
+	}
+
+	return (i);
+}
+
+/**
+ * _putchar_err - writes the character c to stderr
+ * @c: The character to print
+ * Return: On success 1.
+ */
+int _putchar_err(char c)
+{
+	return (write(2, &c, 1));
 }

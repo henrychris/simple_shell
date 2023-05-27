@@ -35,7 +35,9 @@ void *_memcpy(void *dest, void *src, size_t n);
 /* QoL UTILS */
 void _write(char *s);
 int _putchar(char c);
-void write_number(int number);
+void write_number(int number, int fd);
+int _write_err(char *s);
+int _putchar_err(char c);
 int _atoi(const char *str);
 int _is_digit(char c);
 int is_valid_positive_integer(const char *str);

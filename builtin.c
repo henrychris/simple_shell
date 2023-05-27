@@ -60,7 +60,7 @@ void _perror_cd(int count, char *command, char *program_name)
 {
 	_write(program_name);
 	_write(": ");
-	write_number(count);
+	write_number(count, 1);
 	_write(": cd: can't cd to ");
 	_write(command);
 	_write("\n");
@@ -82,13 +82,13 @@ int exit_shell(char **command, char *line, int count, char *program_name)
 	{
 		if (!is_valid_positive_integer(command[1]))
 		{
-			_write(program_name);
-			_write(": ");
-			write_number(count);
-			_write(": ");
-			_write("Illegal number: ");
-			_write(command[1]);
-			_write("\n");
+			_write_err(program_name);
+			_write_err(": ");
+			write_number(count, 2);
+			_write_err(": ");
+			_write_err("Illegal number: ");
+			_write_err(command[1]);
+			_write_err("\n");
 			return (2);
 		}
 		status = _atoi(command[1]);

@@ -32,7 +32,7 @@ void _perror(int count, char *command, char *program_name)
 {
 	_write(program_name);
 	_write(": ");
-	write_number(count);
+	write_number(count, 1);
 	_write(": ");
 	_write(command);
 	_write(": not found\n");
@@ -66,9 +66,10 @@ int _putchar(char c)
 /**
  * write_number - writes a number to stdout
  * @number: the number to write
+ * @fd: where to write to
  * Return: void
  */
-void write_number(int number)
+void write_number(int number, int fd)
 {
 	char buffer[32];
 	int length = 0, i;
@@ -80,6 +81,6 @@ void write_number(int number)
 
 	for (i = length - 1; i >= 0; i--)
 	{
-		write(1, &buffer[i], 1);
+		write(fd, &buffer[i], 1);
 	}
 }
