@@ -2,7 +2,7 @@
 
 /**
  * env - get the environment
- * Return: 0 or 1
+ * Return: Always succeeds
  */
 int env(void)
 {

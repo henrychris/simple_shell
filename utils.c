@@ -51,10 +51,7 @@ int exec_command(char **command, int count, char *program_name)
 	else
 	{
 		if (_strcmp(command[0], "env") == 0)
-		{
-			env();
-			return (0);
-		}
+			return (env());
 		cmd = find_command(command[0]);
 		if (cmd == NULL)
 		{
@@ -62,12 +59,11 @@ int exec_command(char **command, int count, char *program_name)
 			return (1);
 		}
 	}
-
 	child_pid = fork();
 	if (child_pid < 0)
 	{
 		perror("Error with fork().");
-		exit(1);
+		exit(-1);
 	}
 	if (child_pid == 0)
 	{
@@ -76,14 +72,13 @@ int exec_command(char **command, int count, char *program_name)
 		if (execve(cmd, command, NULL) < 0)
 		{
 			_perror(count, command[0], program_name);
-			exit(1);
+			exit(2);
 		}
 	}
-	else
-	{
-		waitpid(child_pid, &status, 0);
-	}
-	return (0);
+	wait(&status);
+	if (WIFEXITED(status))
+		exit_code = (WEXITSTATUS(status));
+	return (exit_code);
 }
 
 /**
@@ -93,12 +88,15 @@ int exec_command(char **command, int count, char *program_name)
  */
 char *find_command(char *command)
 {
-	char *path = PATH;
+	char *path = NULL;
 	char *path_copy;
 	char *directory;
 
+	path = getenv("PATH");
 	if (!path)
-		return (NULL);
+	{
+		path = PATH;
+	}
 
 	if (access(command, X_OK) == 0)
 		return (command);

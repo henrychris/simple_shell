@@ -14,12 +14,14 @@
 #define MAX_ARGC 10
 
 extern char **environ;
+extern int exit_code;
 
 char **parse_command(char *input);
 int exec_command(char **command, int count, char *program_name);
 char *find_command(char *command);
 void _perror(int count, char *command, char *program_name);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
+int getLine(char **line, FILE *fp);
 
 /* STRING UTILS */
 int _strlen(const char *str);
@@ -35,7 +37,8 @@ void _write(char *s);
 int _putchar(char c);
 void write_number(int number);
 /* QoL UTILS */
- /* Builtin */
-int env(void);
 
+/* Builtin */
+int env(void);
+/* Builtin */
 #endif

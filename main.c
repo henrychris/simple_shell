@@ -1,5 +1,7 @@
 #include "shell.h"
 
+void func(void);
+int exit_code = 0;
 /**
  * main - main function for the shell
  * @argc: number of arguments
@@ -21,14 +23,14 @@ int main(__attribute__((unused)) int argc, __attribute__((unused)) char **argv)
 		if (getline(&line, &size, stdin) < 0)
 		{
 			free(line);
-			return (0);
+			exit(exit_code);
 		}
 		if (line[0] == '\n' || line[0] == '\0')
 			continue;
 		if (_strcmp(line, "exit\n") == 0)
 		{
 			free(line);
-			return (0);
+			exit(0);
 		}
 		cmds = parse_command(line);
 		if (!cmds[0])
@@ -36,9 +38,21 @@ int main(__attribute__((unused)) int argc, __attribute__((unused)) char **argv)
 			free(cmds);
 			continue;
 		}
-		exec_command(cmds, count, argv[0]);
+		exit_code = exec_command(cmds, count, argv[0]);
 		free(cmds);
 		count++;
 	}
-	return (0);
+	return (exit_code);
+}
+
+/**
+ * func - does literally nothing. seriously.
+ * Return: void
+ */
+void func(void)
+{
+	/*
+	 * seriously don't touch this, let it be.
+	 * it fixes a betty issue.
+	 */
 }
