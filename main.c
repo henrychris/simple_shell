@@ -30,7 +30,7 @@ int main(__attribute__((unused)) int argc, __attribute__((unused)) char **argv)
 		if (_strcmp(line, "exit\n") == 0)
 		{
 			free(line);
-			exit(0);
+			exit(exit_code);
 		}
 		cmds = parse_command(line);
 		if (!cmds[0])

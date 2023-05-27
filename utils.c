@@ -77,7 +77,7 @@ int exec_command(char **command, int count, char *program_name)
 	wait(&status);
 	if (WIFEXITED(status))
 		exit_code = (WEXITSTATUS(status));
-	free(base_command);
+	/* free(base_command);*/
 	return (exit_code);
 }
 
