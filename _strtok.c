@@ -3,8 +3,11 @@
 /* you can't have too many util classes lmao*/
 
 /**
- * isCharInString 
-*/
+ * isCharInString - checks if char is in string
+ * @str: string
+ * @c: char
+ * Return: 1 if char is in string, 0 otherwise
+ */
 int isCharInString(const char *str, char c)
 {
 	int i = 0;
