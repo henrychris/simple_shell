@@ -24,7 +24,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 int getLine(char **line, FILE *fp);
 
 /* STRING UTILS */
-int _strlen(const char *str);
+size_t _strlen(const char *str);
 int _strcmp(const char *str1, const char *str2);
 int _strcpy(char *dest, char *src);
 char *_strdup(char *s);
@@ -52,6 +52,8 @@ int exit_shell(char **command, char *line, int count, char *program_name);
 /* Builtin */
 
 /* Extra Points */
+char *remwspaces(char *s);
+int wspace(char s);
 char *_strtok(char *str, char const *delim);
 int isCharInString(const char *str, char c);
 /* Extra Points*/
