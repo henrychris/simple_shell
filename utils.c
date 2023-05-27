@@ -41,17 +41,18 @@ char **parse_command(char *command)
  */
 int exec_command(char **command, int count, char *program_name)
 {
-	int status;
+	int status, child_pid;
 	char *cmd = NULL;
-	pid_t child_pid;
 
-	if (command[0][0] == '.')
-	{
-	}
-	else
+	if (command[0][0] != '.')
 	{
 		if (_strcmp(command[0], "env") == 0)
 			return (env());
+		else if (_strcmp(command[0], "cd") == 0)
+		{
+			cd(count, command[1], program_name);
+			return (0);
+		}
 		cmd = find_command(command[0]);
 		if (cmd == NULL)
 		{

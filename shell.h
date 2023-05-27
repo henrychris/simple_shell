@@ -37,8 +37,9 @@ void _write(char *s);
 int _putchar(char c);
 void write_number(int number);
 /* QoL UTILS */
-
-/* Builtin */
+ /* Builtin */
 int env(void);
-/* Builtin */
+int cd(int count, char *args, char *program_name);
+void _perror_cd(int count, char *command, char *program_name);
+ /* Builtin */
 #endif
