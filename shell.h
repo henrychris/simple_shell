@@ -26,7 +26,7 @@ int getLine(char **line, FILE *fp);
 /* STRING UTILS */
 size_t _strlen(const char *str);
 int _strcmp(const char *str1, const char *str2);
-int _strcpy(char *dest, char *src);
+int _strcpy(char *dest, const char *src);
 char *_strdup(char *s);
 char *_strcat(char *dest, const char *src);
 void *_memcpy(void *dest, void *src, size_t n);
@@ -56,5 +56,7 @@ char *remwspaces(char *s);
 int wspace(char s);
 char *_strtok(char *str, char const *delim);
 int isCharInString(const char *str, char c);
+int _setenv(char *cmd1, char *cmd2);
+int _unsetenv(char *cmd1);
 /* Extra Points*/
 #endif

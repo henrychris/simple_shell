@@ -143,6 +143,10 @@ int execute_builtin_command(char **cmd, int count, char *p_name, char *line)
 		return (cd(count, cmd[1], p_name));
 	else if (_strcmp(cmd[0], "exit") == 0)
 		return (exit_shell(cmd, line, count, p_name));
+	else if (_strcmp(cmd[0], "setenv") == 0)
+		return (_setenv(cmd[1], cmd[2]));
+	else if (_strcmp(cmd[0], "unsetenv") == 0)
+		return (_unsetenv(cmd[1]));
 
 	return (-1); /* Indicate that the command is not a built-in command*/
 }

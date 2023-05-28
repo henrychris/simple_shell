@@ -43,7 +43,7 @@ int _strcmp(const char *str1, const char *str2)
  * @src: source string
  * Return: sized of char copied
  */
-int _strcpy(char *dest, char *src)
+int _strcpy(char *dest, const char *src)
 {
 	int i = 0;
 
