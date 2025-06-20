@@ -2,7 +2,7 @@
 
 ![C Language](https://img.shields.io/badge/Language-C-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
-[![Documentation Status](https://readthedocs.org/projects/simple_shell/badge/?version=latest)](https://simple_shell.readthedocs.io/en/latest/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/simple-shell/badge/?version=latest)](https://simple-shell.readthedocs.io/en/latest/?badge=latest)
 
 <h3 align="center">
 <img src="https://cdn.rawgit.com/odb/official-bash-logo/master/assets/Logos/Identity/PNG/BASH_logo-transparent-bg-color.png">
