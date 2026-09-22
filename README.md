@@ -1,8 +1,6 @@
 # Simple Shell
 
 ![C Language](https://img.shields.io/badge/Language-C-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
-[![Documentation Status](https://readthedocs.org/projects/simple-shell/badge/?version=latest)](https://simple-shell.readthedocs.io/en/latest/?badge=latest)
 
 <h3 align="center">
 <img src="https://cdn.rawgit.com/odb/official-bash-logo/master/assets/Logos/Identity/PNG/BASH_logo-transparent-bg-color.png">
@@ -20,7 +18,6 @@
 - [Flowchart](#flowchart)
 - [Contributing](#contributing)
 - [Authors](#authors)
-- [License](#license)
 
 ## Description
 Simple Shell is a command-line interpreter that provides a user interface to access operating system services. This implementation is written in C and mimics the behavior of the sh shell with specific features and limitations.
@@ -102,6 +99,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## Authors
 - [@Adameelmadani](https://github.com/Adameelmadani)
 - [@henrychris](https://github.com/henrychris)
-
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
